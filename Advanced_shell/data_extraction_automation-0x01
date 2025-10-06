@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
+# Extract and format Pokémon data using jq, awk, and sed
 
-read name height weight < <(jq '.name, .height, .weight' data.json| tr '\n' ' ')
-
-height_m=$(awk "BEGIN {printf \"%.1f\", $height/10}")
-weight_kg=$(awk "BEGIN {printf \"%i\", $weight/10}")
-echo "Pikachu is of type Electric, weighs ${weight_kg}kg, and is ${height_m}m tall."
+jq -r '. | "\(.name) \(.types[0].type.name) \(.weight) \(.height)"' data.json | \
+awk '{printf "%s is of type %s, weighs %.1fkg, and is %.1fm tall.\n", $1, $2, $3/10, $4/10}' | \
+sed 's/\b[a-z]/\u&/'
