@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-arr=("Bulbasaur" "Ivysaur" "Venusaur" "Charmander" "Charmeleon")
+arr=("bulbasaur" "ivysaur" "venusaur" "charmander" "charmeleon")
 declare -r API_URL="https://pokeapi.co/api/v2/pokemon/"
 mkdir -p pokemon_data
 for f in "${arr[@]}"; do
