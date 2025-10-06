@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+read name height weight < <(jq '.name, .height, .weight' data.json| tr '\n' ' ')
+
+height_m=$(awk "BEGIN {printf \"%.1f\", $height/10}")
+weight_kg=$(awk "BEGIN {printf \"%i\", $weight/10}")
+echo "Pikachu is of type Electric, weighs ${weight_kg}kg, and is ${height_m}m tall."
