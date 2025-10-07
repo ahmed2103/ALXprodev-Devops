@@ -21,7 +21,7 @@ echo
 
 awk -F "," '
 NR > 1{
-h+=$2; w+=$3 c++
+h+=$2; w+=$3; c++
 }
 END {
   printf "\nAverage Height: %.2f m\nAverage Weight: %.2f kg\n", h/c, w/c
