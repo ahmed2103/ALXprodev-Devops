@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+INPUT_DIR="pokemon_data"
+OUTPUT_FILE="pokemon_report.csv"
+
+if [ ! -d "$INPUT_DIR" ] || [ -z "$(ls -A "$INPUT_DIR")" ]; then
+  echo "NO DATA FOUND"
+  exit 1
+fi
+
+echo "Name,Height (m),Weight (kg)" > "$OUTPUT_FILE"
+
+for file in "$INPUT_DIR"/*.json; do
+  name=$(jq '.name' $file | sed 's/\b[a-z]/\u&/')
+  height=$(jq '.height' $file | awk '{printf "%.2f", $1/10}')
+  weight=$(jq '.weight' $file | awk '{printf "%.2f", $1/10}')
+    echo "$name,$height,$weight" >> "$OUTPUT_FILE"
+done
+echo "CSV Report generated at: $OUTPUT_FILE"
+echo
+
+awk -F "," '
+NR > 1{
+h+=$2; w+=$3 c++
+}
+END {
+  printf "\nAverage Height: %.2f m\nAverage Weight: %.2f kg\n", h/c, w/c
+}
+' "$OUTPUT_FILE"
