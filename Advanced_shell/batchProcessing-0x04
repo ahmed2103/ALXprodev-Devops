@@ -35,3 +35,7 @@ done
 
 wait
 echo "parallel processing done"
+
+for pid in $(jobs -p); do
+  kill "$pid"
+done
